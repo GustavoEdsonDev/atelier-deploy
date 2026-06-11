@@ -1,20 +1,26 @@
 {
-  "name": "atelier-raizes-mvp-workspace",
+  "name": "atelier-raizes-mvp",
   "private": true,
-  "version": "0.2.0",
-  "workspaces": [
-    "apps/web",
-    "apps/api"
-  ],
+  "version": "0.3.0",
   "scripts": {
-    "dev": "concurrently -n web,api -c magenta,cyan \"npm run dev -w @atelier-raizes/web\" \"npm run dev -w @atelier-raizes/api\"",
-    "dev:web": "npm run dev -w @atelier-raizes/web",
-    "dev:api": "npm run dev -w @atelier-raizes/api",
-    "build": "npm run build -w @atelier-raizes/web",
-    "build:web": "npm run build -w @atelier-raizes/web",
-    "start:api": "npm run start -w @atelier-raizes/api"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "lucide-react": "^0.537.0",
+    "next": "^15.5.3",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
   },
   "devDependencies": {
-    "concurrently": "^9.2.1"
+    "@types/node": "^22.17.2",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.8.3"
   }
 }
