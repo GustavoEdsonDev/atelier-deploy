@@ -246,7 +246,7 @@ select {
   min-height: 3.25rem;
   border-radius: 999px;
   border: 1px solid rgb(255 255 255 / 0.12);
-  background: rgb(20 23 24 / 0.96);
+  background: white;
   padding: 0.8rem 1rem;
   color: rgb(255 255 255 / 0.82);
   box-shadow: 0 20px 50px rgba(20, 17, 15, 0.22);
