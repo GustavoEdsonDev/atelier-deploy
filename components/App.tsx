@@ -621,7 +621,6 @@ export default function App() {
     { key: 'home', label: 'Início', icon: Home },
     { key: 'products', label: 'Produtos', icon: Store },
     { key: 'cart', label: 'Carrinho', icon: ShoppingCart },
-    { key: 'admin-hub', label: 'Admin', icon: ShieldCheck },
   ]
 
   const openAdminPanel = () => {
@@ -1638,9 +1637,9 @@ export default function App() {
         {screen !== 'success' ? (
           <>
             <nav className="bottom-nav">
-              <div className="bottom-nav-grid">
+              <div className="grid grid-cols-4 gap-1 md:auto-cols-fr md:grid-flow-col md:gap-2">
                 {navItems.map((item) => {
-                  const active = item.key === 'admin-hub' ? screen.startsWith('admin') : screen === item.key
+                  const active = screen === item.key
                   const Icon = item.icon
 
                   return (
@@ -1649,10 +1648,6 @@ export default function App() {
                       type="button"
                       onClick={() => {
                         setIsMenuOpen(false)
-                        if (item.key === 'admin-hub') {
-                          openAdminPanel()
-                          return
-                        }
                         setScreen(item.key)
                       }}
                       className={`bottom-nav-item ${active ? 'bottom-nav-item-active' : ''}`}
