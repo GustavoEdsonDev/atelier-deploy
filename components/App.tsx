@@ -621,10 +621,11 @@ export default function App() {
     { key: 'home', label: 'Início', icon: Home },
     { key: 'products', label: 'Produtos', icon: Store },
     { key: 'cart', label: 'Carrinho', icon: ShoppingCart },
+    { key: 'admin-hub', label: 'Admin', icon: ShieldCheck },
   ]
 
   const openAdminPanel = () => {
-    if (!isLoggedIn) return
+    setIsLoggedIn(true)
     setScreen('admin-hub')
     setAdminView('hub')
     setIsMenuOpen(false)
@@ -660,35 +661,26 @@ export default function App() {
     </div>
   )
 
-  const topBar = (
-    title: string,
-    subtitle: string,
-    showBack = false,
-    backAction = () => setScreen('home'),
-  ) => (
+  const topBar = (title: string, subtitle: string, showBack = false, backAction = () => setScreen('home')) => (
     <header className="app-topbar">
       <div className="app-topbar-row">
         {showBack ? (
-          <button type="button" onClick={backAction} className="app-topbar-back" aria-label="Voltar">
-            <ArrowLeft size={17} />
+          <button type="button" onClick={backAction} className="app-topbar-back">
+            <ArrowLeft size={18} />
           </button>
         ) : null}
 
         {brandLogo(showBack ? 'h-10 w-10' : 'h-11 w-11')}
 
         <div className="min-w-0">
-          <p className="truncate text-[0.98rem] font-semibold leading-none text-atelier-ink">Atelier Raízes</p>
-          <p className="mt-1 truncate text-[0.58rem] font-semibold uppercase tracking-[0.2em] text-atelier-muted">
-            MVP demonstrativo
-          </p>
+          <p className="truncate text-base font-semibold leading-none text-atelier-ink">Atelier Raízes</p>
+          <p className="mt-1 text-[0.65rem] font-semibold uppercase tracking-[0.22em] text-atelier-muted">MVP demonstrativo</p>
         </div>
       </div>
 
-      <div className="mt-3">
-        <h1 className="text-[1.45rem] font-semibold leading-tight tracking-[-0.05em] text-atelier-burnt sm:text-[1.65rem]">
-          {title}
-        </h1>
-        {subtitle ? <p className="mt-1 max-w-xl text-[0.82rem] leading-5 text-atelier-muted sm:text-sm">{subtitle}</p> : null}
+      <div className="mt-4">
+        <h1 className="text-[1.6rem] font-semibold leading-tight tracking-[-0.05em] text-atelier-burnt md:text-[2rem]">{title}</h1>
+        {subtitle ? <p className="mt-1.5 max-w-xl text-sm leading-6 text-atelier-muted">{subtitle}</p> : null}
       </div>
     </header>
   )
@@ -893,73 +885,65 @@ export default function App() {
       </div>
 
       <div className="catalog-content">
-        <section className="surface-panel catalog-filter-panel">
-          <div className="flex flex-col gap-3">
-            <div>
-              <p className="section-kicker">Catálogo completo</p>
-              <h2 className="mt-1 text-lg font-semibold tracking-[-0.04em] text-atelier-ink">Peças autorais da coleção</h2>
-              <p className="mt-1.5 text-sm leading-6 text-atelier-muted">
-                Uma seleção enxuta para apresentar formas, cores e usos do atelier com clareza.
-              </p>
-            </div>
-
-            <div className="flex flex-wrap gap-2">
-              {catalogCategories.map((category) => (
-                <span
-                  key={category.label}
-                  className="inline-flex items-center gap-2 rounded-full bg-white/75 px-3 py-1.5 text-xs font-semibold text-atelier-ink shadow-soft"
-                >
-                  <span>{category.label}</span>
-                  <span className="rounded-full bg-atelier-mustard px-2 py-0.5 text-[0.65rem] uppercase tracking-[0.12em] text-atelier-burnt">
-                    {category.total}
-                  </span>
-                </span>
-              ))}
-
-              <span className="inline-flex items-center gap-2 rounded-full bg-atelier-burnt px-3 py-1.5 text-xs font-semibold text-white shadow-soft">
-                <span>Disponíveis</span>
-                <span className="rounded-full bg-white/20 px-2 py-0.5 text-[0.65rem] uppercase tracking-[0.12em] text-white">
-                  {availableProductsCount}
+        <section className="surface-panel">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <p className="section-kicker">Catálogo completo</p>
+            <h2 className="mt-1 text-xl font-semibold tracking-[-0.04em] text-atelier-ink md:text-[1.8rem]">Peças autorais da coleção</h2>
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-atelier-muted md:text-base">
+              Uma seleção enxuta para apresentar formas, cores e usos do atelier com clareza.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2 lg:max-w-[28rem] lg:justify-end">
+            {catalogCategories.map((category) => (
+              <span
+                key={category.label}
+                className="inline-flex items-center gap-2 rounded-full bg-white/75 px-4 py-2 text-sm font-semibold text-atelier-ink shadow-soft"
+              >
+                <span>{category.label}</span>
+                <span className="rounded-full bg-atelier-mustard px-2 py-0.5 text-xs uppercase tracking-[0.12em] text-atelier-burnt">
+                  {category.total}
                 </span>
               </span>
-            </div>
+            ))}
+            <span className="inline-flex items-center gap-2 rounded-full bg-atelier-burnt px-4 py-2 text-sm font-semibold text-white shadow-soft">
+              <span>Disponíveis</span>
+              <span className="rounded-full bg-white/20 px-2 py-0.5 text-xs uppercase tracking-[0.12em] text-white">
+                {availableProductsCount}
+              </span>
+            </span>
           </div>
-        </section>
-
-        <section className="grid gap-3">
-          {products.map((product) => (
-            <article key={product.id} className="flex h-full flex-col rounded-[1.65rem] border border-white/80 bg-atelier-mustard p-3.5 shadow-soft">
-              <div className="overflow-hidden rounded-[1.25rem] p-2" style={{ backgroundColor: product.accent }}>
-                <div className="aspect-[4/3] overflow-hidden rounded-[1rem] bg-white/80">{imageFor(product)}</div>
+        </div>
+      </section>
+      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        {products.map((product) => (
+          <article key={product.id} className="flex h-full flex-col rounded-[2rem] border border-white/80 bg-atelier-mustard p-4 shadow-soft">
+            <div className="overflow-hidden rounded-[1.4rem] p-2" style={{ backgroundColor: product.accent }}>
+              <div className="aspect-[4/3] overflow-hidden rounded-[1rem] bg-white/80">{imageFor(product)}</div>
+            </div>
+            <h2 className="mt-4 text-lg font-semibold text-atelier-burnt">{product.name}</h2>
+            <div className="mt-2 flex items-center gap-2">
+              <p className="rounded-full bg-white/75 px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-stone-700">
+                {(stock[product.id] ?? 0) > 0 ? `${stock[product.id] ?? 0} em estoque` : 'Sem estoque'}
+              </p>
+              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-stone-600">{product.label}</p>
+            </div>
+            <p className="mt-3 flex-1 text-sm leading-6 text-stone-900">{product.description}</p>
+            <div className="mt-5 flex items-center justify-between gap-3">
+              <div>
+                {product.oldPrice ? <p className="text-sm text-stone-500 line-through">{formatCurrency(product.oldPrice)}</p> : null}
+                <p className="text-xl font-semibold text-stone-900">{formatCurrency(product.price)}</p>
               </div>
-
-              <h2 className="mt-3 text-base font-semibold text-atelier-burnt">{product.name}</h2>
-
-              <div className="mt-2 flex flex-wrap items-center gap-2">
-                <p className="rounded-full bg-white/75 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-stone-700">
-                  {(stock[product.id] ?? 0) > 0 ? `${stock[product.id] ?? 0} em estoque` : 'Sem estoque'}
-                </p>
-                <p className="text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-stone-600">{product.label}</p>
-              </div>
-
-              <p className="mt-3 flex-1 text-sm leading-6 text-stone-900">{product.description}</p>
-
-              <div className="mt-4 flex items-center justify-between gap-3">
-                <div>
-                  {product.oldPrice ? <p className="text-sm text-stone-500 line-through">{formatCurrency(product.oldPrice)}</p> : null}
-                  <p className="text-xl font-semibold text-stone-900">{formatCurrency(product.price)}</p>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={() => openProductDetails(product.id)}
-                  className="rounded-full bg-atelier-lime px-4 py-2.5 text-sm font-semibold text-stone-900 disabled:cursor-not-allowed disabled:opacity-50"
-                >
-                  Detalhes
-                </button>
-              </div>
-            </article>
-          ))}
+              <button
+                type="button"
+                onClick={() => openProductDetails(product.id)}
+                className="rounded-full bg-atelier-lime px-4 py-3 text-sm font-semibold text-stone-900 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                Detalhes
+              </button>
+            </div>
+          </article>
+        ))}
         </section>
       </div>
     </div>
@@ -1656,7 +1640,7 @@ export default function App() {
             <nav className="bottom-nav">
               <div className="bottom-nav-grid">
                 {navItems.map((item) => {
-                  const active = screen === item.key
+                  const active = item.key === 'admin-hub' ? screen.startsWith('admin') : screen === item.key
                   const Icon = item.icon
 
                   return (
@@ -1665,11 +1649,15 @@ export default function App() {
                       type="button"
                       onClick={() => {
                         setIsMenuOpen(false)
+                        if (item.key === 'admin-hub') {
+                          openAdminPanel()
+                          return
+                        }
                         setScreen(item.key)
                       }}
                       className={`bottom-nav-item ${active ? 'bottom-nav-item-active' : ''}`}
                     >
-                      <Icon size={22} />
+                      <Icon size={24} />
                       <span>{item.label}</span>
                     </button>
                   )
@@ -1695,14 +1683,13 @@ export default function App() {
                       <button
                         type="button"
                         onClick={openAdminPanel}
-                        disabled={!isLoggedIn}
-                        className="mt-1 flex w-full items-center gap-3 rounded-[1rem] px-3 py-3 text-left text-sm text-stone-900 transition hover:bg-stone-100 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent"
+                        className="mt-1 flex w-full items-center gap-3 rounded-[1rem] px-3 py-3 text-left text-sm text-stone-900 transition hover:bg-stone-100"
                       >
                         <ShieldCheck size={18} className="text-atelier-burnt" />
                         <span className="flex-1">
                           <span className="block font-semibold">Acesso administrativo</span>
                           <span className="block text-xs text-atelier-muted">
-                            {isLoggedIn ? 'Abrir operação e estoque' : 'Faça login para liberar'}
+                            Abrir operação e estoque
                           </span>
                         </span>
                       </button>
@@ -1716,7 +1703,7 @@ export default function App() {
                     aria-label={isMenuOpen ? 'Fechar menu' : 'Abrir menu'}
                     className={`bottom-nav-item w-full ${isMenuOpen || screen.startsWith('admin') ? 'bottom-nav-item-active' : ''}`}
                   >
-                    <Menu size={22} />
+                    <Menu size={24} />
                     <span>Menu</span>
                   </button>
                 </div>
