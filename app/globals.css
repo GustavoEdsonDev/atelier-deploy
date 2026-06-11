@@ -49,11 +49,13 @@ select {
   }
 
   .app-frame {
-    @apply mx-auto flex min-h-screen w-full max-w-[430px] flex-col px-4 py-5 pb-28 md:max-w-[1180px] md:px-6 md:pb-8 xl:max-w-[1360px] xl:px-8;
+    @apply mx-auto flex min-h-screen w-full max-w-[430px] flex-col px-4 py-5 md:max-w-[1180px] md:px-6 xl:max-w-[1360px] xl:px-8;
+    padding-bottom: calc(10rem + env(safe-area-inset-bottom));
   }
 
   .app-content {
     @apply flex-1;
+    padding-bottom: calc(8rem + env(safe-area-inset-bottom));
   }
 
   .screen-stack {
@@ -149,7 +151,8 @@ select {
   }
 
   .bottom-nav {
-    @apply fixed inset-x-0 bottom-0 z-20 mx-auto w-full max-w-[430px] rounded-t-[1.4rem] border-t border-atelier-ink/10 bg-atelier-mustard px-4 py-3 md:bottom-5 md:max-w-fit md:rounded-[1.6rem] md:border md:border-white/70 md:bg-white/90 md:px-3 md:py-3 md:shadow-soft md:backdrop-blur;
+    @apply fixed inset-x-0 z-50 mx-auto w-full max-w-[430px] rounded-t-[1.4rem] border-t border-atelier-ink/10 bg-atelier-mustard px-4 py-3 md:max-w-fit md:rounded-[1.6rem] md:border md:border-white/70 md:bg-white/90 md:px-3 md:py-3 md:shadow-soft md:backdrop-blur;
+    bottom: 0;
   }
 
   .bottom-nav-grid {
@@ -165,11 +168,14 @@ select {
   }
 
   .desktop-cart-bar {
-    @apply fixed inset-x-0 bottom-[104px] mx-auto hidden w-full max-w-[1180px] px-6 lg:block xl:max-w-[1360px] xl:px-8;
+    @apply fixed inset-x-0 z-40 mx-auto hidden w-full max-w-[1180px] px-6 lg:block xl:max-w-[1360px] xl:px-8;
+    bottom: calc(5.8rem + env(safe-area-inset-bottom));
+    pointer-events: none;
   }
 
   .desktop-cart-bar-inner {
     @apply ml-auto flex w-full max-w-[22rem] items-center justify-between rounded-[1.5rem] bg-white/75 px-5 py-3 shadow-soft backdrop-blur;
+    pointer-events: auto;
   }
 
   .checkout-desktop-grid {
@@ -178,5 +184,39 @@ select {
 
   .checkout-summary-card {
     @apply xl:sticky xl:top-6 xl:self-start;
+  }
+}
+
+@media (min-width: 768px) {
+  .app-frame {
+    padding-bottom: calc(9rem + env(safe-area-inset-bottom));
+  }
+
+  .app-content {
+    padding-bottom: calc(8rem + env(safe-area-inset-bottom));
+  }
+
+  .bottom-nav {
+    bottom: calc(1.25rem + env(safe-area-inset-bottom));
+  }
+}
+
+@media (min-width: 1024px) {
+  .app-frame {
+    padding-bottom: calc(8rem + env(safe-area-inset-bottom));
+  }
+
+  .app-content {
+    padding-bottom: calc(7rem + env(safe-area-inset-bottom));
+  }
+}
+
+@media (min-width: 1280px) {
+  .app-frame {
+    padding-bottom: calc(7.5rem + env(safe-area-inset-bottom));
+  }
+
+  .app-content {
+    padding-bottom: calc(6.5rem + env(safe-area-inset-bottom));
   }
 }

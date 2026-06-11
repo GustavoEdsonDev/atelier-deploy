@@ -1597,10 +1597,29 @@ export default function App() {
     return home()
   }
 
+  const checkoutBackScreen = () => {
+    if (screen === 'payment') {
+      setScreen('address')
+      return
+    }
+
+    if (screen === 'address') {
+      setScreen('customer')
+      return
+    }
+
+    if (screen === 'customer') {
+      setScreen('cart')
+      return
+    }
+
+    setScreen('cart')
+  }
+
   return (
     <main className="app-shell">
       <div className="app-frame">
-        <div className="screen-stack app-content">{currentScreen()}</div>
+        <div className="screen-stack app-content app-content-safe">{currentScreen()}</div>
 
         {screen !== 'success' ? (
           <>
@@ -1675,11 +1694,17 @@ export default function App() {
             </nav>
 
             {(screen === 'customer' || screen === 'address' || screen === 'payment') && (
-              <div className="fixed inset-x-0 bottom-20 mx-auto flex w-full max-w-[430px] justify-center px-4 md:max-w-[1040px] md:px-6">
-                <div className="flex w-full items-center justify-between rounded-[1.5rem] border border-white/80 bg-white/95 px-4 py-3 shadow-soft backdrop-blur">
-                  <button type="button" onClick={() => setScreen('cart')} className="text-sm font-semibold text-stone-700">
-                    <ArrowLeft size={16} className="inline-block" /> Voltar
+              <div className="checkout-progress-bar">
+                <div className="checkout-progress-inner">
+                  <button
+                    type="button"
+                    onClick={checkoutBackScreen}
+                    className="inline-flex items-center gap-1 text-sm font-semibold text-stone-700"
+                  >
+                    <ArrowLeft size={16} />
+                    Voltar
                   </button>
+
                   <div className="flex items-center gap-2 text-xs font-semibold text-stone-600">
                     <span className={screen === 'customer' ? 'text-atelier-burnt' : ''}>Dados</span>
                     <span>•</span>
